@@ -1,0 +1,122 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/block.json",
+  "apiVersion": 3,
+  "name": "masud-core/posts-grid",
+  "version": "0.1.0",
+  "title": "Masud: Post Grid",
+  "category": "widgets",
+  "icon": "smiley",
+  "description": "Post grid block.",
+  "example": {},
+  "supports": {
+    "html": false,
+    "align": true,
+    "ariaLabel": true,
+    "spacing": {
+      "padding": true,
+      "margin": true
+    },
+    "customClassName": false,
+    "color": {
+      "gradients": true,
+      "text": true,
+      "link": true
+    },
+    "typography": {
+      "lineHeight": true,
+      "fontSize": true
+    },
+    "dimensions": {
+      "aspectRatio": "16/9",
+      "minHeight": "50vh"
+    }
+  },
+  "attributes": {
+    "query": {
+      "type": "object",
+      "default": {}
+    },
+    "categories": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "selectedAuthor": {
+      "type": "number"
+    },
+    "postsToShow": {
+      "type": "number",
+      "default": 5
+    },
+    "displayPostContent": {
+      "type": "boolean",
+      "default": false
+    },
+    "displayPostContentRadio": {
+      "type": "string",
+      "default": "excerpt"
+    },
+    "excerptLength": {
+      "type": "number",
+      "default": 55
+    },
+    "displayAuthor": {
+      "type": "boolean",
+      "default": false
+    },
+    "displayPostDate": {
+      "type": "boolean",
+      "default": false
+    },
+    "postLayout": {
+      "type": "string",
+      "default": "list"
+    },
+    "columns": {
+      "type": "number",
+      "default": 3
+    },
+    "order": {
+      "type": "string",
+      "default": "desc"
+    },
+    "orderBy": {
+      "type": "string",
+      "default": "date"
+    },
+    "displayFeaturedImage": {
+      "type": "boolean",
+      "default": false
+    },
+    "featuredImageAlign": {
+      "type": "string",
+      "enum": [
+        "left",
+        "center",
+        "right"
+      ]
+    },
+    "featuredImageSizeSlug": {
+      "type": "string",
+      "default": "thumbnail"
+    },
+    "featuredImageSizeWidth": {
+      "type": "number",
+      "default": null
+    },
+    "featuredImageSizeHeight": {
+      "type": "number",
+      "default": null
+    },
+    "addLinkToFeaturedImage": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "textdomain": "masud-core",
+  "editorScript": "file:./index.js",
+  "editorStyle": "file:./index.css",
+  "style": "file:./style-index.css",
+  "render": "file:./render.php"
+}
