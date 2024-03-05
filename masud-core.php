@@ -26,5 +26,6 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function masud_core_masud_core_block_init() {
 	register_block_type( __DIR__ . '/build/blocks/posts-grid' );
+	register_block_type( __DIR__ . '/build/blocks/posts-list' );
 }
 add_action( 'init', 'masud_core_masud_core_block_init' );
