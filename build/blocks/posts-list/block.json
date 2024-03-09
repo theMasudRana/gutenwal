@@ -5,7 +5,7 @@
   "version": "0.1.0",
   "title": "Masud: Post List",
   "category": "widgets",
-  "icon": "smiley",
+  "icon": "grid-view",
   "description": "Post list block.",
   "example": {},
   "supports": {

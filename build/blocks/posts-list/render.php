@@ -5,9 +5,10 @@
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?> class="posts-grid">
 	<?php
-	$number_of_posts = !empty( $attributes['postsToShow'] ) ? $attributes['postsToShow'] : 3;
+	$number_of_posts = !empty( $attributes['postsToShow'] ) ? $attributes['postsToShow'] : 5;
 	$order = !empty( $attributes['order'] ) ? $attributes['order'] : 'desc';
 	$orderby = !empty( $attributes['orderBy'] ) ? $attributes['orderBy'] : 'date';
+
 	$args = [
 		'post_type'      => 'post',
 		'posts_per_page' => $number_of_posts,

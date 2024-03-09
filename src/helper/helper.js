@@ -1,0 +1,1 @@
+export default al = alert("Get the helper.js file from the masud-core plugin.");

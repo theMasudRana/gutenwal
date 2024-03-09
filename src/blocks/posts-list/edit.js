@@ -1,34 +1,19 @@
-/**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
- */
-import { __ } from '@wordpress/i18n';
-
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
- */
 import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
 import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
+import Inspector from './inspector';
 import {
 	PanelBody,
-	Spinner,
+	Placeholder,
 	SelectControl,
+	Spinner,
 	TextControl
 } from '@wordpress/components';
 import { useEffect, useState } from '@wordpress/element';
-
-/**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
- */
+import { __ } from '@wordpress/i18n';
+import { addQueryArgs } from '@wordpress/url';
+import metadata from './block.json';
 import './editor.scss';
+
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -40,10 +25,22 @@ import './editor.scss';
  */
 export default function Edit({ attributes, setAttributes }) {
 	const { order, orderBy, postsToShow, categories } = attributes;
-	const [posts, setPosts] = useState([]);
+
+	const [posts, setPosts] = useState(null);
+	const [loading, setLoading] = useState(true);
 	const [postCategories, setPostCategories] = useState([]);
 
+	/**
+	 * Fetch posts from the REST API.
+	 * 
+	 * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-api-fetch/
+	 * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-url/#addqueryargs
+	 * 
+	 * @return {Promise} The Promise object represents the response of the API call.
+	 * 
+	 * */
 	const fetchPosts = async () => {
+		setLoading(true);
 		const queryParameters = {
 			per_page: postsToShow,
 			orderby: orderBy,
@@ -57,9 +54,20 @@ export default function Edit({ attributes, setAttributes }) {
 			setPosts(response);
 		} catch (error) {
 			console.error(error);
+		} finally {
+			setLoading(false);
 		}
 	}
 
+	/**
+	 * Fetch categories from the REST API.
+	 * 
+	 * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-api-fetch/
+	 * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-url/#addqueryargs
+	 * 
+	 * @return {Promise} The Promise object represents the response of the API call.
+	 * 
+	 * */
 	const fetchCategories = async () => {
 		const queryParameters = {
 			per_page: -1
@@ -72,23 +80,36 @@ export default function Edit({ attributes, setAttributes }) {
 			console.error(error);
 		}
 	}
-	console.log("categories", categories);
 
+	/**
+	 * Fetch posts and categories when the block is rendered.
+	 * 
+	 * @see https://reactjs.org/docs/hooks-effect.html
+	 * 
+	 */
 	useEffect(() => {
 		fetchPosts();
 		fetchCategories();
-	}, [order, orderBy, postsToShow]);
+	}, [order, orderBy, postsToShow, categories]);
+
 
 	/**
 	 * If the posts are not yet fetched and it's and empty array.
 	 * 
 	 * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-components/#spinner
 	 */
-
-	if (!posts.length) {
+	const hasPosts = !!posts?.length > 0;
+	if (!hasPosts || loading) {
 		return (
-			<div {...useBlockProps()} className='mcore-loading'>
-				<Spinner />
+			<div {...useBlockProps()}>
+				<Inspector attributes={attributes} setAttributes={setAttributes} postCategories={postCategories} />
+				<Placeholder icon={metadata.icon} label={__('Masud: Posts List')}>
+					{loading ? (
+						<Spinner />
+					) : (
+						__('No posts found.')
+					)}
+				</Placeholder>
 			</div>
 		);
 	}
@@ -102,45 +123,7 @@ export default function Edit({ attributes, setAttributes }) {
 	 */
 	return (
 		<div {...useBlockProps()}>
-			<InspectorControls>
-				<PanelBody title={__('Posts Query', 'masud-core')}>
-					<SelectControl
-						multiple
-						label="Category"
-						value={categories} // should be an array of selected category IDs
-						options={postCategories.map((cat) => ({
-							label: cat.name,
-							value: cat.id,
-						}))}
-						onChange={(selectedCategoryIds) => {
-							setAttributes({ postCategories: selectedCategoryIds });
-						}}
-					/>
-					<TextControl
-						label={__('Number of Posts', 'masud-core')}
-						value={postsToShow}
-						onChange={(value) => setAttributes({ postsToShow: Number(value) })}
-					/>
-					<SelectControl
-						label={__('Order', 'masud-core')}
-						value={order}
-						options={[
-							{ label: __('Ascending', 'masud-core'), value: 'asc' },
-							{ label: __('Descending', 'masud-core'), value: 'desc' },
-						]}
-						onChange={(value) => setAttributes({ order: value })}
-					/>
-					<SelectControl
-						label={__('Order By', 'masud-core')}
-						value={orderBy}
-						options={[
-							{ label: __('Date', 'masud-core'), value: 'date' },
-							{ label: __('Title', 'masud-core'), value: 'title' },
-						]}
-						onChange={(value) => setAttributes({ orderBy: value })}
-					/>
-				</PanelBody>
-			</InspectorControls>
+			<Inspector attributes={attributes} setAttributes={setAttributes} postCategories={postCategories} />
 			<div className='posts-list'>
 				{
 					posts?.map((post) => {
@@ -151,7 +134,7 @@ export default function Edit({ attributes, setAttributes }) {
 								{
 									imageUrl ? <img src={imageUrl} alt={imageAlt} /> : null
 								}
-								<h3>{post.title.rendered}</h3>
+								<h3 className='post-title'>{post.title.rendered}</h3>
 								<p dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}></p>
 							</div>
 						);

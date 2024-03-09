@@ -5,9 +5,10 @@
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?> class="posts-grid">
 	<?php
-	$number_of_posts = !empty( $attributes['postsToShow'] ) ? $attributes['postsToShow'] : 3;
+	$number_of_posts = !empty( $attributes['postsToShow'] ) ? $attributes['postsToShow'] : 5;
 	$order = !empty( $attributes['order'] ) ? $attributes['order'] : 'desc';
 	$orderby = !empty( $attributes['orderBy'] ) ? $attributes['orderBy'] : 'date';
+
 	$args = [
 		'post_type'      => 'post',
 		'posts_per_page' => $number_of_posts,
@@ -24,7 +25,7 @@
 			?>
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<header class="entry-header">
-					<?php the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '">', '</a></h2>' ); ?>
+					<?php the_title( '<h2 class="post-title"><a href="' . esc_url( get_permalink() ) . '">', '</a></h2>' ); ?>
 				</header>
 				<div class="entry-content">
 					<?php the_excerpt(); ?>
