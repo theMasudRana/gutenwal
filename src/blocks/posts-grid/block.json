@@ -12,24 +12,7 @@
 		"html": false,
 		"align": true,
 		"ariaLabel": true,
-		"spacing": {
-			"padding": true,
-			"margin": true
-		},
-		"customClassName": false,
-		"color": {
-			"gradients": true,
-			"text": true,
-			"link": true
-		},
-		"typography": {
-			"lineHeight": true,
-			"fontSize": true
-		},
-		"dimensions": {
-			"aspectRatio": "16/9",
-			"minHeight": "50vh"
-		}
+		"customClassName": false
     },
 	"attributes": {
 		"query": {

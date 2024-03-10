@@ -16,54 +16,15 @@
 			"padding": true,
 			"margin": true
 		},
-		"customClassName": false,
-		"color": {
-			"gradients": true,
-			"text": true,
-			"link": true
-		},
-		"typography": {
-			"lineHeight": true,
-			"fontSize": true
-		},
-		"dimensions": {
-			"aspectRatio": "16/9",
-			"minHeight": "50vh"
-		}
+		"customClassName": false
     },
 	"attributes": {
 		"categories": {
-			"type": "array",
-			"items": {
-				"type": "object"
-			}
-		},
-		"selectedAuthor": {
-			"type": "number"
+			"type": "array"
 		},
 		"postsToShow": {
 			"type": "number",
 			"default": 5
-		},
-		"displayPostContent": {
-			"type": "boolean",
-			"default": false
-		},
-		"displayPostContentRadio": {
-			"type": "string",
-			"default": "excerpt"
-		},
-		"excerptLength": {
-			"type": "number",
-			"default": 55
-		},
-		"displayAuthor": {
-			"type": "boolean",
-			"default": false
-		},
-		"displayPostDate": {
-			"type": "boolean",
-			"default": false
 		},
 		"order": {
 			"type": "string",
@@ -73,29 +34,13 @@
 			"type": "string",
 			"default": "date"
 		},
-		"displayFeaturedImage": {
-			"type": "boolean",
-			"default": false
-		},
-		"featuredImageAlign": {
+		"titleColor": {
 			"type": "string",
-			"enum": [ "left", "center", "right" ]
+			"default": "#101010"
 		},
-		"featuredImageSizeSlug": {
+		"titleBackgroundColor": {
 			"type": "string",
-			"default": "thumbnail"
-		},
-		"featuredImageSizeWidth": {
-			"type": "number",
-			"default": null
-		},
-		"featuredImageSizeHeight": {
-			"type": "number",
-			"default": null
-		},
-		"addLinkToFeaturedImage": {
-			"type": "boolean",
-			"default": false
+			"default": "#fff000"
 		}
 	},
 	"textdomain": "masud-core",

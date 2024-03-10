@@ -24,7 +24,7 @@ import './editor.scss';
  * @return {Element} Element to render.
  */
 export default function Edit({ attributes, setAttributes }) {
-	const { order, orderBy, postsToShow, categories } = attributes;
+	const { order, orderBy, postsToShow, categories, titleColor } = attributes;
 
 	const [posts, setPosts] = useState(null);
 	const [loading, setLoading] = useState(true);
@@ -134,7 +134,7 @@ export default function Edit({ attributes, setAttributes }) {
 								{
 									imageUrl ? <img src={imageUrl} alt={imageAlt} /> : null
 								}
-								<h3 className='post-title'>{post.title.rendered}</h3>
+								<h3 className='post-title' style={{ color: titleColor }}>{post.title.rendered}</h3>
 								<p dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}></p>
 							</div>
 						);
